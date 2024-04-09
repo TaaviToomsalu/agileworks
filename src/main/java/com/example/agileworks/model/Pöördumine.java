@@ -1,18 +1,23 @@
 package com.example.agileworks.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Pöördumine {
     private String id;
     private String kirjeldus;
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // Customize the date format
     private LocalDateTime sisestamiseAeg;
-    private LocalDateTime lahendamiseTähtaeg;
+    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // Customize the date format
+    private ZonedDateTime lahendamiseTähtaeg;
     private boolean lahendatud;
 
     // Constructor
-    public Pöördumine(String kirjeldus, LocalDateTime lahendamiseTähtaeg) {
+    public Pöördumine(String kirjeldus, ZonedDateTime lahendamiseTähtaeg) {
         this.kirjeldus = kirjeldus;
-        this.sisestamiseAeg = LocalDateTime.now();
         this.lahendamiseTähtaeg = lahendamiseTähtaeg;
         this.lahendatud = false;
     }
@@ -38,15 +43,20 @@ public class Pöördumine {
         return sisestamiseAeg;
     }
 
+
     public void setSisestamiseAeg(LocalDateTime sisestamiseAeg) {
         this.sisestamiseAeg = sisestamiseAeg;
     }
 
-    public LocalDateTime getLahendamiseTähtaeg() {
+    public ZonedDateTime getLahendamiseTähtaeg() {
         return lahendamiseTähtaeg;
     }
 
-    public void setLahendamiseTähtaeg(LocalDateTime lahendamiseTähtaeg) {
+    public String getFormattedLahendamiseTähtaeg() {
+        return lahendamiseTähtaeg.format(DateTimeFormatter.ISO_DATE_TIME);
+    }
+
+    public void setLahendamiseTähtaeg(ZonedDateTime lahendamiseTähtaeg) {
         this.lahendamiseTähtaeg = lahendamiseTähtaeg;
     }
 

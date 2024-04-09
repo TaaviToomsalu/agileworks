@@ -4,6 +4,9 @@ import com.example.agileworks.model.Pöördumine;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +23,7 @@ public class SupportTicketController {
     public List<Pöördumine> getActiveSupportTickets() {
         // Filter active support tickets (not solved and not expired)
         return pöördumised.stream()
-                .filter(p -> !p.isLahendatud() && p.getLahendamiseTähtaeg().isAfter(LocalDateTime.now()))
+                .filter(p -> !p.isLahendatud() && p.getLahendamiseTähtaeg().isAfter(ZonedDateTime.now()))
                 .collect(Collectors.toList());
     }
 
@@ -29,9 +32,17 @@ public class SupportTicketController {
         // Generate a unique identifier for the new support ticket
         String id = UUID.randomUUID().toString();
 
-        // Set the unique identifier and insertion time to the support ticket
+        // Set the unique identifier
         pöördumine.setId(id);
+
+        // Set the current time as sisestamiseAeg
         pöördumine.setSisestamiseAeg(LocalDateTime.now());
+
+        // Convert the lahendamiseTähtaeg string into a ZonedDateTime object with timezone
+        ZonedDateTime lahendamiseTähtaeg = ZonedDateTime.parse(pöördumine.getFormattedLahendamiseTähtaeg());
+
+        // Set the parsed lahendamiseTähtaeg
+        pöördumine.setLahendamiseTähtaeg(lahendamiseTähtaeg.withZoneSameInstant(ZoneId.systemDefault()));
 
         // Add the support ticket to the list
         pöördumised.add(pöördumine);
