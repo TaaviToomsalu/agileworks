@@ -19,8 +19,13 @@ public class SupportTicketController {
 
     @GetMapping
     public List<Pöördumine> getActiveSupportTickets() {
-        // Filter active support tickets (not solved and not expired)
-        return supportTicketService.getActiveSupportTickets(pöördumised);
+        // Get active support tickets from the stored list and update the flag for expired tickets
+        List<Pöördumine> activeTickets = supportTicketService.getActiveSupportTickets(pöördumised);
+
+        // Sort the active tickets by deadline descending
+        activeTickets = supportTicketService.sortTicketsByDeadlineDescending(activeTickets);
+
+        return activeTickets;
     }
 
     @PostMapping

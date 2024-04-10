@@ -1,6 +1,7 @@
 package com.example.agileworks.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -9,11 +10,10 @@ import java.time.format.DateTimeFormatter;
 public class Pöördumine {
     private String id;
     private String kirjeldus;
-    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // Customize the date format
     private LocalDateTime sisestamiseAeg;
-    //@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss") // Customize the date format
     private ZonedDateTime lahendamiseTähtaeg;
     private boolean lahendatud;
+    private boolean aegunudVõiVähemKuiTundJäänud;
 
     // Constructor
     public Pöördumine(String kirjeldus, ZonedDateTime lahendamiseTähtaeg) {
@@ -31,6 +31,7 @@ public class Pöördumine {
     public void setId(String id) {
         this.id = id;
     }
+
     public String getKirjeldus() {
         return kirjeldus;
     }
@@ -43,7 +44,6 @@ public class Pöördumine {
         return sisestamiseAeg;
     }
 
-
     public void setSisestamiseAeg(LocalDateTime sisestamiseAeg) {
         this.sisestamiseAeg = sisestamiseAeg;
     }
@@ -52,6 +52,7 @@ public class Pöördumine {
         return lahendamiseTähtaeg;
     }
 
+    @JsonIgnore
     public String getFormattedLahendamiseTähtaeg() {
         return lahendamiseTähtaeg.format(DateTimeFormatter.ISO_DATE_TIME);
     }
@@ -68,6 +69,14 @@ public class Pöördumine {
         this.lahendatud = lahendatud;
     }
 
+    public boolean isAegunudVõiVähemKuiTundJäänud() {
+        return aegunudVõiVähemKuiTundJäänud;
+    }
+
+    public void setAegunudVõiVähemKuiTundJäänud(boolean aegunudVõiVähemKuiTundJäänud) {
+        this.aegunudVõiVähemKuiTundJäänud = aegunudVõiVähemKuiTundJäänud;
+    }
+
     @Override
     public String toString() {
         return "Pöördumine{" +
@@ -75,6 +84,7 @@ public class Pöördumine {
                 ", sisestamiseAeg=" + sisestamiseAeg +
                 ", lahendamiseTähtaeg=" + lahendamiseTähtaeg +
                 ", lahendatud=" + lahendatud +
+                ", aegunudVõiVähemKuiTundJäänud=" + aegunudVõiVähemKuiTundJäänud +
                 '}';
     }
 }

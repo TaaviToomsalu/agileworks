@@ -3,10 +3,12 @@ package com.example.agileworks.service;
 import com.example.agileworks.model.Pöördumine;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,14 +36,29 @@ public class SupportTicketService {
     }
 
     public List<Pöördumine> sortTicketsByDeadlineDescending(List<Pöördumine> pöördumised) {
-        Collections.sort(pöördumised, (a, b) -> b.getLahendamiseTähtaeg().compareTo(a.getLahendamiseTähtaeg()));
+
+        Collections.sort(pöördumised, Comparator.comparing(Pöördumine::getLahendamiseTähtaeg));
+
         return pöördumised;
     }
 
     public List<Pöördumine> getActiveSupportTickets(List<Pöördumine> pöördumised) {
         ZonedDateTime now = ZonedDateTime.now();
         return pöördumised.stream()
-                .filter(p -> !p.isLahendatud() && p.getLahendamiseTähtaeg().isAfter(now))
+                .map(p -> {
+                    // Calculate time difference between current time and deadline
+                    Duration duration = Duration.between(now, p.getLahendamiseTähtaeg());
+                    long hoursRemaining = duration.toHours();
+
+                    // Set flag based on time remaining
+                    if ((hoursRemaining < 1)) {
+                        p.setAegunudVõiVähemKuiTundJäänud(true);
+                    } else {
+                        p.setAegunudVõiVähemKuiTundJäänud(false);
+                    }
+
+                    return p;
+                })
                 .collect(Collectors.toList());
     }
 
