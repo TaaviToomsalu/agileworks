@@ -75,9 +75,9 @@ public class SupportTicketService {
     }
     */
 
-    /*
+
     public void deleteSupportTicket(List<Pöördumine> pöördumised, String id) {
         // Remove the support ticket with the given ID
         pöördumised.removeIf(p -> p.getId().equals(id));
-    } */
+    }
 }

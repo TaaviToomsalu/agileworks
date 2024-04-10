@@ -20,6 +20,7 @@ public class Pöördumine {
         this.kirjeldus = kirjeldus;
         this.lahendamiseTähtaeg = lahendamiseTähtaeg;
         this.lahendatud = false;
+        this.aegunudVõiVähemKuiTundJäänud = false;
     }
 
 

@@ -42,10 +42,10 @@ public class SupportTicketController {
     }
     */
 
-    /*
+
     @DeleteMapping("/{id}")
     public void deleteSupportTicket(@PathVariable String id) {
-        supportTicketService.deleteSupportTicket(id);
+        supportTicketService.deleteSupportTicket(pöördumised, id);
     }
-    */
+
 }
