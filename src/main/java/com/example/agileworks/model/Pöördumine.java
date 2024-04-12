@@ -32,6 +32,18 @@ public class Pöördumine {
         this.id = id;
     }
 
+    public String getKirjeldus() {
+        return kirjeldus;
+    }
+
+    public void setKirjeldus(String kirjeldus) {
+        this.kirjeldus = kirjeldus;
+    }
+
+    public LocalDateTime getSisestamiseAeg() {
+        return sisestamiseAeg;
+    }
+
     public void setSisestamiseAeg(LocalDateTime sisestamiseAeg) {
         this.sisestamiseAeg = sisestamiseAeg;
     }
@@ -47,6 +59,18 @@ public class Pöördumine {
 
     public void setLahendamiseTähtaeg(ZonedDateTime lahendamiseTähtaeg) {
         this.lahendamiseTähtaeg = lahendamiseTähtaeg;
+    }
+
+    public boolean isLahendatud() {
+        return lahendatud;
+    }
+
+    public void setLahendatud(boolean lahendatud) {
+        this.lahendatud = lahendatud;
+    }
+
+    public boolean isAegunud() {
+        return aegunud;
     }
 
     public void setAegunud(boolean aegunud) {
