@@ -1,6 +1,5 @@
 package com.example.agileworks.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
@@ -13,14 +12,14 @@ public class Pöördumine {
     private LocalDateTime sisestamiseAeg;
     private ZonedDateTime lahendamiseTähtaeg;
     private boolean lahendatud;
-    private boolean aegunudVõiVähemKuiTundJäänud;
+    private boolean aegunud;
 
     // Constructor
     public Pöördumine(String kirjeldus, ZonedDateTime lahendamiseTähtaeg) {
         this.kirjeldus = kirjeldus;
         this.lahendamiseTähtaeg = lahendamiseTähtaeg;
         this.lahendatud = false;
-        this.aegunudVõiVähemKuiTundJäänud = false;
+        this.aegunud = false;
     }
 
 
@@ -31,18 +30,6 @@ public class Pöördumine {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getKirjeldus() {
-        return kirjeldus;
-    }
-
-    public void setKirjeldus(String kirjeldus) {
-        this.kirjeldus = kirjeldus;
-    }
-
-    public LocalDateTime getSisestamiseAeg() {
-        return sisestamiseAeg;
     }
 
     public void setSisestamiseAeg(LocalDateTime sisestamiseAeg) {
@@ -62,20 +49,8 @@ public class Pöördumine {
         this.lahendamiseTähtaeg = lahendamiseTähtaeg;
     }
 
-    public boolean isLahendatud() {
-        return lahendatud;
-    }
-
-    public void setLahendatud(boolean lahendatud) {
-        this.lahendatud = lahendatud;
-    }
-
-    public boolean isAegunudVõiVähemKuiTundJäänud() {
-        return aegunudVõiVähemKuiTundJäänud;
-    }
-
-    public void setAegunudVõiVähemKuiTundJäänud(boolean aegunudVõiVähemKuiTundJäänud) {
-        this.aegunudVõiVähemKuiTundJäänud = aegunudVõiVähemKuiTundJäänud;
+    public void setAegunud(boolean aegunud) {
+        this.aegunud = aegunud;
     }
 
     @Override
@@ -85,7 +60,7 @@ public class Pöördumine {
                 ", sisestamiseAeg=" + sisestamiseAeg +
                 ", lahendamiseTähtaeg=" + lahendamiseTähtaeg +
                 ", lahendatud=" + lahendatud +
-                ", aegunudVõiVähemKuiTundJäänud=" + aegunudVõiVähemKuiTundJäänud +
+                ", aegunudVõiVähemKuiTundJäänud=" + aegunud +
                 '}';
     }
 }

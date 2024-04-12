@@ -1,15 +1,9 @@
 package com.example.agileworks;
 
-import com.example.agileworks.model.Pöördumine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.List;
 
 @SpringBootApplication
 @RestController
@@ -20,11 +14,8 @@ public class Application {
 	}
 
 	@GetMapping
-	public List<String> hello() {
-		return List.of(
-				"Hello",
-				"World"
-		);
+	public String hello() {
+		return "Back töötab!";
 	}
 
 }

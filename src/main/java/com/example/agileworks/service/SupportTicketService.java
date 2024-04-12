@@ -17,19 +17,19 @@ import java.util.stream.Collectors;
 public class SupportTicketService {
 
     public Pöördumine processSupportTicket(Pöördumine pöördumine) {
-        // Generate a unique identifier for the new support ticket
+        // Genereerib unikaalse ID pöördumisele
         String id = UUID.randomUUID().toString();
 
-        // Set the unique identifier
+        // Sätib ID
         pöördumine.setId(id);
 
-        // Set the current time as sisestamiseAeg
+        // Sätib praeguse aja sisestamiseAeg-le
         pöördumine.setSisestamiseAeg(LocalDateTime.now());
 
-        // Convert the lahendamiseTähtaeg string into a ZonedDateTime object with timezone
+        // Teisendab lahendamiseTähtaeg stringi ZonedDateTime objekti timezonega
         ZonedDateTime lahendamiseTähtaeg = ZonedDateTime.parse(pöördumine.getFormattedLahendamiseTähtaeg());
 
-        // Set the parsed lahendamiseTähtaeg
+        // Sätib teisendatud lahendamiseTähtaeg
         pöördumine.setLahendamiseTähtaeg(lahendamiseTähtaeg.withZoneSameInstant(ZoneId.systemDefault()));
 
         return pöördumine;
@@ -37,6 +37,7 @@ public class SupportTicketService {
 
     public List<Pöördumine> sortTicketsByDeadlineDescending(List<Pöördumine> pöördumised) {
 
+        // Sorteerib pöördumised kõige esmast tähelepanu vajavatest hilisemateks.
         Collections.sort(pöördumised, Comparator.comparing(Pöördumine::getLahendamiseTähtaeg));
 
         return pöördumised;
@@ -46,15 +47,15 @@ public class SupportTicketService {
         ZonedDateTime now = ZonedDateTime.now();
         return pöördumised.stream()
                 .map(p -> {
-                    // Calculate time difference between current time and deadline
+                    // Kalkuleerib aja erinevuse praeguse aja ja deadline-ga
                     Duration duration = Duration.between(now, p.getLahendamiseTähtaeg());
                     long hoursRemaining = duration.toHours();
 
-                    // Set flag based on time remaining
+                    // Sättib aegunud mudelivälja
                     if ((hoursRemaining < 1)) {
-                        p.setAegunudVõiVähemKuiTundJäänud(true);
+                        p.setAegunud(true);
                     } else {
-                        p.setAegunudVõiVähemKuiTundJäänud(false);
+                        p.setAegunud(false);
                     }
 
                     return p;
@@ -62,22 +63,9 @@ public class SupportTicketService {
                 .collect(Collectors.toList());
     }
 
-    /*
-    public Pöördumine markSupportTicketAsSolved(List<Pöördumine> pöördumised, String id) {
-        for (Pöördumine pöördumine : pöördumised) {
-            if (pöördumine.getId().equals(id)) {
-                // Mark the support ticket as solved
-                pöördumine.setLahendatud(true);
-                return pöördumine;
-            }
-        }
-        return null; // Support ticket with the given ID not found
-    }
-    */
-
 
     public void deleteSupportTicket(List<Pöördumine> pöördumised, String id) {
-        // Remove the support ticket with the given ID
+        // Eemaldab pöördumise antud ID-ga
         pöördumised.removeIf(p -> p.getId().equals(id));
     }
 }

@@ -19,10 +19,10 @@ public class SupportTicketController {
 
     @GetMapping
     public List<Pöördumine> getActiveSupportTickets() {
-        // Get active support tickets from the stored list and update the flag for expired tickets
+        // Võta aktiivsed pöördumised listist ja uuenda aegunud välja
         List<Pöördumine> activeTickets = supportTicketService.getActiveSupportTickets(pöördumised);
 
-        // Sort the active tickets by deadline descending
+        // Sorteerib aktiivsed pöördumised vähenevas järjestikuses
         activeTickets = supportTicketService.sortTicketsByDeadlineDescending(activeTickets);
 
         return activeTickets;
@@ -34,14 +34,6 @@ public class SupportTicketController {
         pöördumised.add(processedTicket);
         return processedTicket;
     }
-
-    /*
-    @PutMapping("/{id}")
-    public Pöördumine markSupportTicketAsSolved(@PathVariable String id) {
-        return supportTicketService.markSupportTicketAsSolved(id);
-    }
-    */
-
 
     @DeleteMapping("/{id}")
     public void deleteSupportTicket(@PathVariable String id) {
